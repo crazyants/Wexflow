@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Tasks>
+  <!--
+    The FilesCopier task copies a collection of files to a destination folder. 
+    
+    The files copied will be loaded by this task so that other
+    tasks can select them through the selectFiles option.
+  -->
+  <Task id="$int" name="FilesCopier" description="$string" enabled="true|false">
+    <!-- 
+      The files loaded by the task having as id $taskId will be
+      copied to the destination folder.
+    -->
+    <Setting name="selectFiles" value="$taskId" />
+    <Setting name="selectFiles" value="$taskId" />
+    <!-- You can add as many selecteFiles as you want.-->
+    <!-- The destination folder. For example: C:\MyFolder\-->
+    <Setting name="destFolder" value="$string" />
+    <!--- true to overwrite the files located in the destination folder, false otherwise.-->
+    <Setting name="overwrite" value="true|false" />
+  </Task>
+</Tasks>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Tasks>
+  <!--
+    The FilesSender task sends a collection of files to an FTP, FTPS or SFTP server.
+  -->
+  <Task id="$int" name="FilesSender" description="$string" enabled="true|false">
+    <!-- 
+      The files loaded by the task having as id $taskId will be sent.
+    -->
+    <Setting name="selectFiles" value="$taskId" />
+    <Setting name="selectFiles" value="$taskId" />
+    <!-- You can add as many selecteFiles as you want.-->
+    <!--- Possible values: ftp|ftps|sftp-->
+    <Setting name="protocol" value="ftp|ftps|sftp" />
+    <!-- The server host address. -->
+    <Setting name="server" value="$string" />
+    <!-- The server port. It should be 21 for FTP and 22 for SFTP.-->
+    <Setting name="port" value="$int" />
+    <!-- The user name to connect to the server.-->
+    <Setting name="user" value="$string" />
+    <!-- The user password to connect to the server.-->
+    <Setting name="password" value="password" />
+    <!-- The private key file path to connect to the server. 
+         This option is for SFTP only. You can remove it if it's not necessary.
+    -->
+    <Setting name="privateKeyPath" value="C:\WexflowTesting\Keys\key.key" />
+    <!-- The private key passphrase to connect to the server.
+         This option is for SFTP only. You can remove it if it's not necessary.
+    -->
+    <Setting name="passphrase" value="wexflow" />
+    <!-- The remote path. -->
+    <Setting name="path" value="$string" />
+  </Task>
+</Tasks>

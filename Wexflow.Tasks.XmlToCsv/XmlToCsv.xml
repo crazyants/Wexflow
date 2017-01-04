@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Tasks>
+  <!--
+    The XmlToCsv task transforms an XML file to a CSV file. 
+    The format of the XML file is as follows:
+    <Lines>
+	    <Line>
+		    <Column>$string</Column>
+		    <Column>$string</Column>
+		    <Column>$string</Column>
+	    </Line>
+	    <Line>
+		    <Column>$string</Column>
+		    <Column>$string</Column>
+		    <Column>$string</Column>
+	    </Line>
+	    ...
+    </Lines>
+    
+    The CSV files generated will be loaded by this task so that other
+    tasks can select them through the selectFiles option.
+  -->
+  <Task id="$int" name="XmlToCsv" description="$string" enabled="true|false">
+    <!-- 
+      The XML files loaded by the task having as id $taskId will be
+      transformed to CSV files.
+    -->
+    <Setting name="selectFiles" value="$taskId" />
+    <Setting name="selectFiles" value="$taskId" />
+    <!-- You can add as many selecteFiles as you want.-->
+  </Task>
+</Tasks>
