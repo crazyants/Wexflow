@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Tasks>
+  <!--
+    The Xslt task transforms an XML file. 
+    
+    The files generated will be loaded by this task so that other
+    tasks can select them through the selectFiles option.
+  -->
+  <Task id="$int" name="Xslt" description="$string" enabled="true|false">
+    <!-- 
+      The XML files loaded by the task having as id $taskId will be
+      transformed.
+    -->
+    <Setting name="selectFiles" value="$taskId" />
+    <Setting name="selectFiles" value="$taskId" />
+    <!-- You can add as many selecteFiles as you want.-->
+    <!-- The XSLT file path. Example: C:\Wexflow\Xslt\Products.xslt-->
+    <Setting name="xsltPath" value="$string" />
+    <!-- The version of the XSLT processor to use. Possible options: 1.0|2.0-->
+    <Setting name="version" value="1.0|2.0" />
+  </Task>
+</Tasks>

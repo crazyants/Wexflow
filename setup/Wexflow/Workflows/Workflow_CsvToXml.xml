@@ -1,0 +1,21 @@
+<Workflow id="1" name="Workflow_CsvToXml" description="Workflow_CsvToXml">
+	<Settings>
+		<Setting name="launchType" value="trigger" /> <!-- startup|trigger|periodic -->
+		<Setting name="enabled" value="true" /> <!-- true|false -->
+	</Settings>
+	<Tasks>
+		<Task id="1" name="FilesLoader" description="Loading CSVs" enabled="true">
+			<Setting name="file" value="C:\WexflowTesting\CsvToXml\csv1.csv" />
+			<Setting name="file" value="C:\WexflowTesting\CsvToXml\csv2.csv" />
+		</Task>
+		<Task id="2" name="CsvToXml" description="Generating XMl files from CSVs" enabled="true">
+			<Setting name="selectFiles" value="1" />
+		</Task>
+		<Task id="3" name="FilesMover" description="Moving Xmls to CsvToXml folder" enabled="true">
+			<Setting name="selectFiles" value="2" />
+			<Setting name="destFolder" value="C:\WexflowTesting\CsvToXml\" />
+		</Task>
+		<Task id="4" name="ListFiles" description="Listing files" enabled="true">
+		</Task>
+	</Tasks>
+</Workflow>

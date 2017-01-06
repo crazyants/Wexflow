@@ -11,53 +11,61 @@ using Wexflow.Core;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 using System.IO;
+using Wexflow.Core.Service.Contracts;
+using System.Windows.Threading;
 
 namespace Wexflow.Clients.Manager
 {
     public partial class Form1 : Form
     {
-        public static string SETTINGS_FILE = 
-            ConfigurationManager.AppSettings["WexflowSettingsFile"];
+        public static string SETTINGS_FILE = ConfigurationManager.AppSettings["WexflowSettingsFile"];
         
         private const string COLUMN_ID = "Id";
         private const string COLUMN_ENABLED = "Enabled";
         private const int TIMER_INTERVAL = 100; // ms
 
-        private WexflowEngine _wexflowEngine;
+        private WexflowServiceClient _wexflowServiceClient;
+        private WorkflowInfo[] _workflows;
         private Dictionary<int, Timer> _timers;
         private Dictionary<int, bool> _previousIsRunning;
         private Dictionary<int, bool> _previousIsPaused;
 
-        [DllImport("kernel32.dll",
-            EntryPoint = "AllocConsole",
-            SetLastError = true,
-            CharSet = CharSet.Auto,
-            CallingConvention = CallingConvention.StdCall)]
-        private static extern int AllocConsole();
+        // TODO Wexflow Editor
+        // TODO WebApp
+        // TODO FilesRenamer?, YouTube?
 
         public Form1()
         {
-            // Display the logger
-            AllocConsole();
-          
-            // Initialize the form
             InitializeComponent();
-            this._wexflowEngine = new WexflowEngine(SETTINGS_FILE);
-            this._wexflowEngine.Run();
-            BindDataGridView(_wexflowEngine.Workflows);
+
+            this.textBoxInfo.Text = "Loading workflows...";
+
             this._timers = new Dictionary<int, Timer>();
             this._previousIsRunning = new Dictionary<int, bool>();
             this._previousIsPaused = new Dictionary<int, bool>();
+
+            this.backgroundWorker1.RunWorkerAsync();
         }
 
-        private void BindDataGridView(Workflow[] workflows)
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            List<WorkflowInfo> wfis = new List<WorkflowInfo>();
-            foreach (Workflow wf in workflows)
+            this._wexflowServiceClient = new WexflowServiceClient();
+            this._workflows = _wexflowServiceClient.GetWorkflows();
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            BindDataGridView();   
+        }
+
+        private void BindDataGridView()
+        {
+            SortableBindingList<WorkflowDataInfo> workflows = new SortableBindingList<WorkflowDataInfo>();
+            foreach (WorkflowInfo workflow in this._workflows)
             {
-                wfis.Add(new WorkflowInfo(wf.Id, wf.Name, wf.LaunchType, wf.IsEnabled, wf.Description));
+                workflows.Add(new WorkflowDataInfo(workflow.Id, workflow.Name, workflow.LaunchType, workflow.IsEnabled, workflow.Description));
             }
-            this.dataGridViewWorkflows.DataSource = new SortableBindingList<WorkflowInfo>(wfis);
+            this.dataGridViewWorkflows.DataSource = workflows;
 
             this.dataGridViewWorkflows.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.dataGridViewWorkflows.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -80,12 +88,17 @@ namespace Wexflow.Clients.Manager
             return wfId;
         }
 
+        private WorkflowInfo GetWorkflow(int id)
+        {
+            return this._wexflowServiceClient.GetWorkflow(id);
+        }
+
         private void buttonStart_Click(object sender, EventArgs e)
         {
             int wfId = GetSlectedWorkflowId();
             if (wfId > -1)
             {
-                this._wexflowEngine.StartWorkflow(wfId);
+                this._wexflowServiceClient.StartWorkflow(wfId);
             }
         }
 
@@ -94,7 +107,7 @@ namespace Wexflow.Clients.Manager
             int wfId = GetSlectedWorkflowId();
             if (wfId > -1)
             {
-                _wexflowEngine.PauseWorkflow(wfId);
+                this._wexflowServiceClient.SuspendWorkflow(wfId);
                 this.UpdateButtons(wfId, true);
             }
         }
@@ -104,7 +117,7 @@ namespace Wexflow.Clients.Manager
             int wfId = GetSlectedWorkflowId();
             if (wfId > -1)
             {
-                _wexflowEngine.ResumeWorkflow(wfId);
+                this._wexflowServiceClient.ResumeWorkflow(wfId);
             }
         }
 
@@ -113,7 +126,7 @@ namespace Wexflow.Clients.Manager
             int wfId = GetSlectedWorkflowId();
             if (wfId > -1)
             {
-                this._wexflowEngine.StopWorkflow(wfId);
+                this._wexflowServiceClient.StopWorkflow(wfId);
                 this.UpdateButtons(wfId, true);
             }
         }
@@ -124,7 +137,7 @@ namespace Wexflow.Clients.Manager
 
             if (wfId > -1)
             {
-                Workflow workflow = _wexflowEngine.GetWorkflow(wfId);
+                WorkflowInfo workflow = this.GetWorkflow(wfId);
 
                 foreach (Timer timer in this._timers.Values) timer.Stop();
 
@@ -151,7 +164,7 @@ namespace Wexflow.Clients.Manager
             }
         }
 
-        private bool WorkflowStatusChanged(Workflow workflow)
+        private bool WorkflowStatusChanged(WorkflowInfo workflow)
         {
             bool changed = false;
             if (!this._previousIsRunning.ContainsKey(workflow.Id))
@@ -188,7 +201,7 @@ namespace Wexflow.Clients.Manager
         {
             if (wfId > -1)
             {
-                Workflow workflow = _wexflowEngine.GetWorkflow(wfId);
+                WorkflowInfo workflow = this.GetWorkflow(wfId);
 
                 if (workflow != null)
                 {
@@ -229,7 +242,7 @@ namespace Wexflow.Clients.Manager
             int wfId = this.GetSlectedWorkflowId();
             if (wfId > -1)
             { 
-                Workflow workflow = _wexflowEngine.GetWorkflow(wfId);
+                WorkflowInfo workflow = this.GetWorkflow(wfId);
 
                 if (workflow != null && workflow.IsEnabled)
                 {

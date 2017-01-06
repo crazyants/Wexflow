@@ -1,0 +1,19 @@
+<Workflow id="9" name="Workflow_MailsSender" description="Workflow_MailsSender">
+	<Settings>
+		<Setting name="launchType" value="trigger" /> <!-- startup|trigger|periodic -->
+		<Setting name="enabled" value="true" /> <!-- true|false -->
+	</Settings>
+	<Tasks>
+		<Task id="1" name="FilesLoader" description="Loading mails" enabled="true">
+			<Setting name="folder" value="C:\WexflowTesting\Mails\" />
+		</Task>
+		<Task id="2" name="MailsSender" description="Sending mails" enabled="true">
+			<Setting name="selectFiles" value="1" />
+			<Setting name="host" value="127.0.0.1" />
+			<Setting name="port" value="587" />
+			<Setting name="enableSsl" value="true" />
+			<Setting name="user" value="user" />
+			<Setting name="password" value="password" />
+		</Task>
+	</Tasks>
+</Workflow>

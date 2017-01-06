@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Wexflow>
+	<Setting name="workflowsFolder" value="C:\Wexflow\Workflows" />
+	<Setting name="tempFolder" value="C:\Wexflow\Temp" />
+</Wexflow>

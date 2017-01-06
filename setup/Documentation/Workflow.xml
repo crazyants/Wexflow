@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This is the configuration file of a Workflow. 
+    A workflow is composed of:
+      - An id which is an integer that must be unique.
+      - A name which is a string that must be unique.
+      - A description wich is a string.
+      - A settings section which is composed of the following elements:
+        - A launchType which is one of the following options:
+          - startup: The workflow is launched when Wexflow engine starts.
+          - trigger: The workflow is launched manually from the Wexflow manager.
+          - periodic: The workflow is lauched periodically.
+        - A period which is necessary for the periodic launchType. It is 
+          a timeSpan in this format dd.hh:mm:ss. For example the period
+          00.00:02:00 will launch the workflow every 2 minutes.
+        - The enable option which allows to enable or disable a workflow.
+          The possible values are true or false.
+      - A Tasks section which contains the tasks that will be executed by
+        the workflow one after the other.
+        - A Task is composed of:
+          - An id which is an integer that must be unique.
+          - A name wich is one of the options described in the tasks documentation.
+          - A description which is a string.
+          - The enable option which allows to enable or disable a task. The possible 
+            values are true or false.
+          - A collection of settings.
+-->
+<Workflow id="$int" name="$string" description="$string">
+  <Settings>
+    <Setting name="launchType" value="startup|trigger|periodic" />
+    <Setting name="period" value="dd.hh:mm:ss" />
+    <Setting name="enabled" value="true|false" />
+  </Settings>
+  <Tasks>
+    <Task id="$int" name="$string" description="$string" enabled="true|false">
+      <Setting name="$string" value="$string" />
+      <Setting name="$string" value="$string" />
+      <!-- You can add as many settings as you want. -->
+    </Task>
+    <Task id="$int" name="$string" description="$string" enabled="true|false">
+      <Setting name="$string" value="$string" />
+      <Setting name="$string" value="$string" />
+    </Task>
+    <!-- You can add as many tasks as you want. -->
+  </Tasks>
+</Workflow>

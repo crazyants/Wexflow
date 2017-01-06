@@ -1,0 +1,16 @@
+<Mails>
+	<Mail>
+		<From>akram.elassas@gmail.com</From>
+		<To>akram.elassas@gmail.com, elassas@hormail.com</To>
+		<Cc>akram.elassas@gmail.com, elassas@hormail.com</Cc>
+		<Subject>Wexflow testing 1</Subject>
+		<Body>Wexflow testing email body.</Body>
+	</Mail>
+	<Mail>
+		<From>akram.elassas@gmail.com</From>
+		<To>akram.elassas@gmail.com, elassas@hormail.com</To>
+		<Cc>akram.elassas@gmail.com, elassas@hormail.com</Cc>
+		<Subject>Wexflow testing 2</Subject>
+		<Body>Wexflow testing email body.</Body>
+	</Mail>
+</Mails>

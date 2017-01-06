@@ -1,0 +1,22 @@
+<Workflow id="6" name="Workflow_FilesSender" description="Workflow_FilesSender">
+	<Settings>
+		<Setting name="launchType" value="trigger" /> <!-- startup|trigger|periodic -->
+		<Setting name="enabled" value="true" /> <!-- true|false -->
+	</Settings>
+	<Tasks>
+		<Task id="1" name="FilesLoader" description="Loading files" enabled="true">
+			<Setting name="file" value="C:\WexflowTesting\file1.txt" />
+			<Setting name="file" value="C:\WexflowTesting\file2.txt" />
+			<Setting name="file" value="C:\WexflowTesting\file3.txt" />
+		</Task>
+		<Task id="2" name="FilesSender" description="Sending files" enabled="true">
+			<Setting name="protocol" value="ftp" /> <!-- ftp|ftps|sftp -->
+			<Setting name="server" value="127.0.1" />
+			<Setting name="port" value="21" />
+			<Setting name="user" value="user" />
+			<Setting name="password" value="password" />
+			<Setting name="path" value="/" />
+			<Setting name="selectFiles" value="1" />
+		</Task>
+	</Tasks>
+</Workflow>
