@@ -17,10 +17,12 @@ using System.Diagnostics;
 
 namespace Wexflow.Clients.Manager
 {
+    // TODO Wexflow Editor
+    // TODO WebApp
+    // TODO FilesRenamer?, YouTube?
+
     public partial class Form1 : Form
-    {
-        public static string SETTINGS_FILE = ConfigurationManager.AppSettings["WexflowSettingsFile"];
-        
+    {     
         private const string COLUMN_ID = "Id";
         private const string COLUMN_ENABLED = "Enabled";
         private const int TIMER_INTERVAL = 100; // ms
@@ -31,11 +33,6 @@ namespace Wexflow.Clients.Manager
         private Dictionary<int, bool> _previousIsRunning;
         private Dictionary<int, bool> _previousIsPaused;
         private bool _windowsServiceWasStopped;
-
-        // TODO Fix the bug of starting Wexflow Windows service when Wexflow Manager is running
-        // TODO Wexflow Editor
-        // TODO WebApp
-        // TODO FilesRenamer?, YouTube?
 
         public Form1()
         {
