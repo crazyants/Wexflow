@@ -10,9 +10,6 @@ namespace Wexflow.Clients.WindowsService
 {
     static class Program
     {
-        /// <summary>
-        /// Point d'entrée principal de l'application.
-        /// </summary>
         static void Main(string[] args)
         {
             if (args.Length > 0 && args[0].Equals("debug"))
@@ -23,11 +20,9 @@ namespace Wexflow.Clients.WindowsService
             }
             else
             {
-                ServiceBase[] servicesToRun;
-                servicesToRun = new ServiceBase[] { new WexflowWindowsService() };
+                ServiceBase[] servicesToRun = new ServiceBase[] { new WexflowWindowsService() };
                 ServiceBase.Run(servicesToRun);
             }
         }
-
     }
 }

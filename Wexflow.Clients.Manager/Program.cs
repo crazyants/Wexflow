@@ -7,9 +7,10 @@ using System.Configuration;
 
 namespace Wexflow.Clients.Manager
 {
-    static class Program
+    public static class Program
     {
-        static string WEXFLOW_SERVICE_NAME = ConfigurationManager.AppSettings["WEXFLOW_SERVICE_NAME"];
+        public static string WEXFLOW_SERVICE_NAME = ConfigurationManager.AppSettings["WEXFLOW_SERVICE_NAME"];
+        public static bool DEBUG_MODE = false;
 
         /// <summary>
         /// Point d'entrée principal de l'application.
@@ -19,13 +20,12 @@ namespace Wexflow.Clients.Manager
         {
             if (args.Length > 0 && args[0].Equals("debug"))
             {
+                DEBUG_MODE = true;
                 RunForm1();
             }
             else
             {
-                ServiceController sc = new ServiceController(WEXFLOW_SERVICE_NAME);
-
-                if (sc.Status == ServiceControllerStatus.Running)
+                if (IsWexflowWindowsServiceRunning())
                 {
                     RunForm1();
                 }
@@ -41,6 +41,12 @@ namespace Wexflow.Clients.Manager
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+        }
+
+        public static bool IsWexflowWindowsServiceRunning()
+        {
+            ServiceController sc = new ServiceController(WEXFLOW_SERVICE_NAME);
+            return sc.Status == ServiceControllerStatus.Running;
         }
     }
 }

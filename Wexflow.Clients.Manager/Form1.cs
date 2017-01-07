@@ -13,6 +13,7 @@ using Microsoft.Win32.SafeHandles;
 using System.IO;
 using Wexflow.Core.Service.Contracts;
 using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace Wexflow.Clients.Manager
 {
@@ -29,7 +30,9 @@ namespace Wexflow.Clients.Manager
         private Dictionary<int, Timer> _timers;
         private Dictionary<int, bool> _previousIsRunning;
         private Dictionary<int, bool> _previousIsPaused;
+        private bool _windowsServiceWasStopped;
 
+        // TODO Fix the bug of starting Wexflow Windows service when Wexflow Manager is running
         // TODO Wexflow Editor
         // TODO WebApp
         // TODO FilesRenamer?, YouTube?
@@ -49,8 +52,16 @@ namespace Wexflow.Clients.Manager
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            this._wexflowServiceClient = new WexflowServiceClient();
-            this._workflows = _wexflowServiceClient.GetWorkflows();
+            if (Program.DEBUG_MODE || Program.IsWexflowWindowsServiceRunning())
+            {
+                this._wexflowServiceClient = new WexflowServiceClient();
+                this._workflows = _wexflowServiceClient.GetWorkflows();
+            }
+            else 
+            {
+                this._workflows = new WorkflowInfo[] { };
+                this.textBoxInfo.Text = "";
+            }
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -83,14 +94,43 @@ namespace Wexflow.Clients.Manager
             int wfId = -1;
             if (dataGridViewWorkflows.SelectedRows.Count > 0)
             {
-                wfId = int.Parse(dataGridViewWorkflows.SelectedRows[0].Cells[COLUMN_ID].Value.ToString());
+                if(Program.DEBUG_MODE || Program.IsWexflowWindowsServiceRunning())
+                {
+                    wfId = int.Parse(dataGridViewWorkflows.SelectedRows[0].Cells[COLUMN_ID].Value.ToString());
+                }
+                else
+                {
+                    HandleNonRunningWindowsService();
+                }
             }
             return wfId;
         }
 
         private WorkflowInfo GetWorkflow(int id)
         {
-            return this._wexflowServiceClient.GetWorkflow(id);
+            if (Program.DEBUG_MODE || Program.IsWexflowWindowsServiceRunning())
+            {
+                if (this._windowsServiceWasStopped)
+                {
+                    this._wexflowServiceClient = new WexflowServiceClient();
+                    this._windowsServiceWasStopped = false;
+                    this.UpdateButtons(id, true);
+                }
+                return this._wexflowServiceClient.GetWorkflow(id);
+            }
+            else
+            {
+                this._windowsServiceWasStopped = true;
+                HandleNonRunningWindowsService();
+            }
+
+            return null;
+        }
+
+        private void HandleNonRunningWindowsService()
+        {
+            this.buttonStart.Enabled = this.buttonPause.Enabled = this.buttonResume.Enabled = this.buttonStop.Enabled = false;
+            this.textBoxInfo.Text = "Wexflow Windows Service is not running.";
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -139,7 +179,7 @@ namespace Wexflow.Clients.Manager
             {
                 WorkflowInfo workflow = this.GetWorkflow(wfId);
 
-                foreach (Timer timer in this._timers.Values) timer.Stop();
+                StopTimers();
 
                 if (workflow.IsEnabled)
                 {
@@ -162,6 +202,11 @@ namespace Wexflow.Clients.Manager
                     this.UpdateButtons(wfId, true);
                 }
             }
+        }
+
+        private void StopTimers()
+        {
+            foreach (Timer timer in this._timers.Values) timer.Stop();
         }
 
         private bool WorkflowStatusChanged(WorkflowInfo workflow)
@@ -208,8 +253,7 @@ namespace Wexflow.Clients.Manager
                     if (!workflow.IsEnabled)
                     {
                         this.textBoxInfo.Text = "This workflow is disabled.";
-                        this.buttonStart.Enabled = this.buttonPause.Enabled = this.buttonResume.Enabled
-                            = this.buttonStop.Enabled = false;
+                        this.buttonStart.Enabled = this.buttonPause.Enabled = this.buttonResume.Enabled = this.buttonStop.Enabled = false;
                     }
                     else
                     {
@@ -256,6 +300,20 @@ namespace Wexflow.Clients.Manager
                     }
                 }
             }
+        }
+
+        private void WriteEventLog(string msg, EventLogEntryType eventLogEntryType)
+        {
+            using (EventLog eventLog = new EventLog("Application"))
+            {
+                eventLog.Source = "Application";
+                eventLog.WriteEntry(msg, eventLogEntryType, 101, 1);
+            }
+        }
+
+        private void WriteEventLogError(string msg)
+        {
+            this.WriteEventLog(msg, EventLogEntryType.Error);
         }
     }
 }
