@@ -70,14 +70,15 @@ Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Wexflow.Tasks.Zip.dll"; Des
 Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Wexflow.Tasks.Tar.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Wexflow.Tasks.Tgz.dll"; DestDir: "{app}"; Flags: ignoreversion
 
+Source: "Documentation\*"; DestDir: "{app}\Documentation"; Flags: ignoreversion recursesubdirs
+
+Source: "Wexflow.ico"; DestDir: "{app}"; Flags: ignoreversion
+
 Source: "Wexflow.log"; DestDir: "{app}"; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall
 
 Source: "Wexflow\*"; DestDir: "C:\Wexflow\"; Flags: ignoreversion recursesubdirs uninsneveruninstall
 Source: "WexflowTesting\*"; DestDir: "C:\WexflowTesting\"; Flags: ignoreversion recursesubdirs uninsneveruninstall
 
-Source: "Documentation\*"; DestDir: "{app}\Documentation"; Flags: ignoreversion recursesubdirs
-
-Source: "Wexflow.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -104,8 +105,47 @@ Filename: "{sys}\sc.exe"; Parameters: "stop Wexflow" ; Flags: runhidden waitunti
 Filename: "{sys}\sc.exe"; Parameters: "delete Wexflow" ; Flags: runhidden waituntilterminated
 
 [UninstallDelete]
+Type: filesandordirs; Name: "{app}\Manager\Wexflow.Clients.Manager.exe";
+Type: filesandordirs; Name: "{app}\Manager\Wexflow.Clients.Manager.exe.config";
+Type: filesandordirs; Name: "{app}\Manager\Wexflow.Core.WexflowServiceClient.dll";
 Type: filesandordirs; Name: "{app}\Manager"
-Type: filesandordirs; Name: "{app}\*.dll"
-Type: filesandordirs; Name: "{app}\*.exe"
-Type: filesandordirs; Name: "{app}\*.exe.config"
-Type: filesandordirs; Name: "{app}\*.InstallLog"
+
+Type: filesandordirs; Name: "{app}\Wexflow.Clients.WindowsService.exe";
+Type: filesandordirs; Name: "{app}\Wexflow.Clients.WindowsService.exe.config";
+
+Type: filesandordirs; Name: "{app}\Wexflow.Core.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Core.Service.Contracts.dll";
+
+Type: filesandordirs; Name: "{app}\FluentFTP.dll";
+Type: filesandordirs; Name: "{app}\Hammock.ClientProfile.dll";
+Type: filesandordirs; Name: "{app}\ICSharpCode.SharpZipLib.dll";
+Type: filesandordirs; Name: "{app}\log4net.dll";
+Type: filesandordirs; Name: "{app}\Newtonsoft.Json.dll";
+Type: filesandordirs; Name: "{app}\Renci.SshNet.dll";
+Type: filesandordirs; Name: "{app}\TweetSharp.dll";
+
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.CsvToXml.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.FilesCopier.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.FilesLoader.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.FilesMover.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.FilesRemover.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.FilesSender.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.ListEntities.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.ListFiles.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.MailsSender.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.Md5.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.Mkdir.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.ProcessLauncher.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.Rmdir.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.Touch.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.Twitter.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.XmlToCsv.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.Xslt.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.Zip.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.Tar.dll";
+Type: filesandordirs; Name: "{app}\Wexflow.Tasks.Tgz.dll";
+
+Type: filesandordirs; Name: "{app}\Documentation";
+
+Type: filesandordirs; Name: "{app}\Wexflow.ico";
+Type: filesandordirs; Name: "{app}\*.InstallLog";
