@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Tasks>
+  <!--
+    The Sql task executes a collection of SQL script files. 
+    This task supports Microsoft SQL Server, Microsoft Access, Oracle, MySQL, SQLite, PostgreSQL and Teradata.
+  -->
+  <Task id="$int" name="Sql" description="$string" enabled="true|false">
+    <!-- 
+      The SQL script files loaded by the task having as id $taskId will be
+      executed.
+    -->
+    <Setting name="selectFiles" value="$taskId" />
+    <Setting name="selectFiles" value="$taskId" />
+    <!-- You can add as many selecteFiles as you want.-->
+    <!-- The database engine type. Possible options: sqlserver|access|oracle|mysql|sqlite|postgresql|teradata-->
+    <Setting name="type" value="sqlserver|access|oracle|mysql|sqlite|postgresql|teradata" />
+    <!--- The connection string.-->
+    <Setting name="connectionString" value="$string" />
+    <!-- Optional. It is possible to execute an SQL script through this option.-->
+    <Setting name="sql" value="$string" />
+  </Task>
+</Tasks>

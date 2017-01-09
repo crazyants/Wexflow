@@ -63,7 +63,7 @@ namespace Wexflow.Clients.Manager
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            BindDataGridView();   
+            BindDataGridView();
         }
 
         private void BindDataGridView()
@@ -110,8 +110,8 @@ namespace Wexflow.Clients.Manager
                 if (this._windowsServiceWasStopped)
                 {
                     this._wexflowServiceClient = new WexflowServiceClient();
+                    this.backgroundWorker1.RunWorkerAsync();
                     this._windowsServiceWasStopped = false;
-                    this.UpdateButtons(id, true);
                 }
                 return this._wexflowServiceClient.GetWorkflow(id);
             }

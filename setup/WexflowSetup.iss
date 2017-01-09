@@ -49,6 +49,14 @@ Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Newtonsoft.Json.dll"; DestD
 Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Renci.SshNet.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Wexflow.Clients.WindowsService\bin\Debug\TweetSharp.dll"; DestDir: "{app}"; Flags: ignoreversion
 
+Source: "..\libs\Mono.Security.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\libs\Npgsql.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\libs\Oracle.DataAccess.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\libs\MySql.Data.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\libs\System.Data.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\libs\Teradata.Client.Provider.dll"; DestDir: "{app}"; Flags: ignoreversion
+
+
 Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Wexflow.Tasks.CsvToXml.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Wexflow.Tasks.FilesCopier.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Wexflow.Tasks.FilesLoader.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -69,6 +77,7 @@ Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Wexflow.Tasks.Xslt.dll"; De
 Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Wexflow.Tasks.Zip.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Wexflow.Tasks.Tar.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Wexflow.Tasks.Tgz.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Wexflow.Clients.WindowsService\bin\Debug\Wexflow.Tasks.Sql.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 Source: "Documentation\*"; DestDir: "{app}\Documentation"; Flags: ignoreversion recursesubdirs
 
