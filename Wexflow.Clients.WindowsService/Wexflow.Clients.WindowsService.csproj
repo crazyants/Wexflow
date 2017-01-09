@@ -128,6 +128,10 @@
       <Project>{F3F7276B-AC03-4DB2-A1D8-28738434C72E}</Project>
       <Name>Wexflow.Tasks.Rmdir</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wexflow.Tasks.Sql\Wexflow.Tasks.Sql.csproj">
+      <Project>{EF416670-6443-4C98-8D26-27D3741B8FB0}</Project>
+      <Name>Wexflow.Tasks.Sql</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wexflow.Tasks.Tar\Wexflow.Tasks.Tar.csproj">
       <Project>{D737B1BB-8A6D-4015-9B2C-3D6760EEE6AF}</Project>
       <Name>Wexflow.Tasks.Tar</Name>

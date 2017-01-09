@@ -176,7 +176,7 @@ namespace Wexflow.Clients.Manager
             {
                 WorkflowInfo workflow = this.GetWorkflow(wfId);
 
-                StopTimers();
+                foreach (Timer timer in this._timers.Values) timer.Stop();
 
                 if (workflow.IsEnabled)
                 {
@@ -199,11 +199,6 @@ namespace Wexflow.Clients.Manager
                     this.UpdateButtons(wfId, true);
                 }
             }
-        }
-
-        private void StopTimers()
-        {
-            foreach (Timer timer in this._timers.Values) timer.Stop();
         }
 
         private bool WorkflowStatusChanged(WorkflowInfo workflow)

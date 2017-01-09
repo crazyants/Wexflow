@@ -39,7 +39,7 @@ namespace Wexflow.Clients.WindowsService
                 this._serviceHost.Close();
             }
 
-            // Create a ServiceHost for the CalculatorService type and 
+            // Create a ServiceHost for the WexflowService type and 
             // provide the base address.
             this._serviceHost = new ServiceHost(typeof(WexflowService));
                 

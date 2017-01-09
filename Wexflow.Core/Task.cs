@@ -78,6 +78,17 @@ namespace Wexflow.Core
             return files.ToArray();
         }
 
+        public Entity[] SelectEntities()
+        {
+            List<Entity> entities = new List<Entity>();
+            foreach (string id in this.GetSettings("selectEntities"))
+            {
+                int taskId = int.Parse(id);
+                entities.AddRange(this.Workflow.EntitiesPerTask[taskId]);
+            }
+            return entities.ToArray();
+        }
+
         private string BuildLogMsg(string msg)
         {
             return string.Format("{0} [{1}] {2}", this.Workflow.LogTag, this.GetType().Name, msg);
